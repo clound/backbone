@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>动态绑定和取消视图中的事件</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    div {
+        width: 260px;
+        text-align: center;
+        padding: 5px;
+    }
+    .changed {
+        border: 1px solid #000;
+    }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script type="text/template" id="main-tpl">
+        <div id="backbone">backbone是构建前端MVC的利器</div>
+        <input type="button" id="btn_a" value="切换样式"/>
+        <input type="button" id="btn_b" value="取消绑定"/>
+        <input type="button" id="btn_c" value="重新绑定" onclick="stuv.rebind()"/>
+    </script>
+    
+    <script>
+        var stuv = null;
+        var stuview = Backbone.View.extend({
+            el: $("#main"),
+            initialize: function() {
+                this.template = _.template($("#main-tpl").html());
+                this.render();
+            },
+            render: function() {
+                this.$el.html(this.template());
+            },
+            rebind: function() {
+                this.delegateEvents(this.events);
+            },
+            events: {
+                'click input#btn_a': 'btnclick_a',
+                'click input#btn_b': 'btnclick_b'
+            },
+            btnclick_a: function() {
+                $("#backbone").toggleClass("changed");
+            },
+            btnclick_b: function() {
+                this.undelegateEvents();
+            }
+        });
+
+        // 实例化一个view视图
+        stuv = new stuview();
+    </script>
+
+
+</body>
+</html>

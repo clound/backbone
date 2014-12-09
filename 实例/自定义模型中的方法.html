@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>自定义模型中的方法</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var student =Backbone.Model.extend({
+		initialize: function() {
+			// 执行构造代码
+		},
+		defaults: {
+			Code: "",
+			Name: "",
+			Score: ""
+		},
+		PrintLog: function() {
+			console.log(this.get("Name") + " 在 " +
+						this.get("Class") + " 读小学 ");
+			console.log(this.escape("Name") + " 在 " +
+						this.escape("Class") + " 读小学 ");
+		}
+	});
+	var stuA = new student();
+	stuA.set({
+		Code: "10102",
+		Name: "'陈小明'",
+		Score: "300",
+		Class: " 一年级<一>班"
+	});
+	stuA.PrintLog();
+</script>
+
+
+
+</body>
+</html>

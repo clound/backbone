@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>backbone study</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+	
+</head>
+<body>
+	
+	<script>
+		(function($) {
+			$(function() {
+
+				/**
+				 * 创建 InvoiceItemModel 模型
+				 */
+				var InvoiceItemModel = Backbone.Model.extend({
+
+					// set default values.
+					defaults: {
+						price: 0,
+						quantity: 0
+					},
+
+					// Calculate amount.
+					calculateAmount: function() {
+						return this.get('price') * this.get('quantity');
+					}
+				});
+
+				// 创建一个模型实例
+				var invoiceItemModel = new InvoiceItemModel({
+					price: 2,
+					quantity: 3
+				});
+
+				/**
+				 * 定义一个负责对模型进行渲染的视图
+				 */
+				var PreviewInvoiceItemView = Backbone.View.extend({
+
+					// Define template using templating engin from
+					// Underscore.js
+					template: _.template('\
+						Price: <%= price %>.\
+						Quantity: <%= quantity %>.\
+						Amount: <%= amount %>.\
+					'),
+
+					// Render view.
+					render: function() {
+
+						// Generate HTML by rendering the template.
+						var html = this.template({
+
+							// Pass model properties to the template.
+							price: this.model.get('price'),
+							quantity: this.model.get('quantity'),
+
+							// Calculate amount and pass it to the template.
+							amount: this.model.calculateAmount()
+						});
+
+						// Set html for the view element using jQuery.
+						$(this.el).html(html);
+					}
+				});
+
+				var previewInvoiceItemView = new PreviewInvoiceItemView({
+					model: invoiceItemModel,
+					el: 'body'
+				});
+
+				previewInvoiceItemView.render();
+
+			});
+		})(jQuery);
+	</script>
+
+
+</body>
+</html>

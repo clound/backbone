@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>查找集合对象中的模型</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+
+    var student = Backbone.Model.extend({
+    	defaults: {
+    		Code: "",
+    		Name: "",
+    		Score: 0
+    	},
+    	idAttribute: "Code"
+    });
+
+    var stumodels = [{
+    	Code: "10101",
+    	Name: "周小敏",
+    	Score: 500
+    }, {
+    	Code: "10102",
+    	Name: "陆明明",
+    	Score: 300
+    }, {
+    	Code: "10103",
+    	Name: "陈天豪",
+    	Score: 720
+    }, {
+    	Code: "10104",
+    	Name: "刘真真",
+    	Score: 600
+    }, {
+    	Code: "10105",
+    	Name: "张明基",
+    	Score: 450
+    }, {
+    	Code: "10106",
+    	Name: "舒虎",
+    	Score: 660
+    }, {
+    	Code: "10107",
+    	Name: "占小方",
+    	Score: 380
+    }, {
+    	Code: "10108",
+    	Name: "李煜",
+    	Score: 660
+    }, {
+    	Code: "10109",
+    	Name: "钟舒畅",
+    	Score: 640
+    }, {
+    	Code: "10110",
+    	Name: "佟明月",
+    	Score: 660
+    }];
+
+    var stus = new Backbone.Collection(stumodels, {
+    	model: student
+    });
+
+    // 输出全部的模型对象
+    for (var i = 0; i < stus.models.length; i++) {
+    	console.log(stus.models[i].toJSON());
+    }
+
+    console.log("----------------------查询结果----------------------");
+
+    // 查找ID号为10106的对象模型
+    var find_id_model = stus.get(10106);
+
+    // 查找索引号为6的对象模型
+    var find_at_model = stus.at(6);
+
+    // 查找与属性名称和值相匹配的对象模型
+    var find_0_model = stus.findWhere({
+    	Score: 660
+    });
+    var find_1_model = stus.where({
+    	Score: 660
+    }, true);
+    var find_2_model = stus.where({
+    	Score: 660
+    }, false);
+
+    // 以对象的形式输出模型内容
+    console.log("----------------obj.get(id)-----------------");
+    console.log(find_id_model.toJSON());
+    console.log("----------------obj.at(index)-----------------");
+    console.log(find_at_model.toJSON());
+    console.log("----------------obj.findWhere(attrs)-----------------");
+    console.log(find_0_model.toJSON());
+    console.log("----------------obj.where(attrs,true)-----------------");
+    console.log(find_1_model.toJSON());
+    console.log("----------------obj.where(attrs,false)-----------------");
+    for (var i = 0; i < find_2_model.length; i++) {
+    	console.log(find_2_model[i].toJSON());
+    }
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>关闭数据验证</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var student =Backbone.Model.extend({
+		initialize: function() {
+			// 初始化时监听验证
+			this.on("invalid", function(model, error) {
+				console.log(error);
+			});
+			this.on("change:Name", function(model, value) {
+				console.log("您触发了Name属性修改事件！");
+			});
+		},
+		validate: function(attrs) {
+			if (!_.isString(attrs.Name)) return '姓名必须是字符！'
+			if (!_.isNumber(attrs.Score)) return '分数必须是数字！'
+		},
+		defaults: {
+			Code: "10001",
+			Name: "钟大清",
+			Score: 100
+		}
+	});
+	var stuE = new student();
+	stuE.set({
+		Code: "10002",
+		Name: 123123,
+		Score: 200
+	}, { "silent": true});
+	console.log(stuE.toJSON());
+
+	// 手动验证，如果验证不成功，将数据回滚
+	if (!_.isString(stuE.get("Name")) || !_.isNumber(stuE.get("Score"))) {
+		stuE.set({
+			"Name": stuE.previous("Name"),
+			"Score": stuE.previous("Score")
+		});
+	}
+	console.log(stuE.toJSON());
+</script>
+
+
+
+</body>
+</html>

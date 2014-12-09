@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>html5中history API方法</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    div {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    </style>
+</head>
+<body>
+    
+    <div>记录总量：<span id="divNum"></span></div>
+    <div>刷新后：<span id="divShow"></span></div>
+
+    <script>
+        var obj_b_state = {
+            Code: "10007",
+            Name: "李四",
+            Score: 910
+        }
+
+        window.history.replaceState(obj_b_state, "html5中history API方法");
+        document.getElementById("divNum").innerHTML = history.length;
+        document.getElementById("divShow").innerHTML = JSON.stringify(window.history.state);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

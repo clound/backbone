@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>backbone study</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+
+    // 定义Book模型类
+	var Book = Backbone.Model.extend({
+	    defaults : {
+	        name : 'unknown',
+	        author : 'unknown',
+	        price : 0
+	    }
+	});
+
+	// 实例化模型对象
+	var javabook = new Book({
+	    name : 'Thinking in Java',
+	    author : 'Bruce Eckel',
+	    price : 395.70
+	});
+
+	// 从Backbone模块类继承的子类，都包含一个__super__静态属性，这是一个指向父类原型对象的引用
+	var Book = Backbone.Model.extend({
+	    constructor: function() {
+	        Book.__super__.constructor.call(this)
+	    }
+	});
+
+</script>
+
+
+
+</body>
+</html>

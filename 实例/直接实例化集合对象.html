@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>直接实例化集合对象</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+
+    var student = Backbone.Model.extend({
+    	defaults: {
+    		Code: "",
+    		Name: "",
+    		Score: ""
+    	}
+    });
+
+    var stumodels = [{
+    	Code: "10104",
+    	Name: "周小敏",
+    	Score: 500
+    }, {
+    	Code: "10105",
+    	Name: "陆明明",
+    	Score: 300
+    }, {
+    	Code: "10106",
+    	Name: "陈天豪",
+    	Score: 720
+    }];
+
+    var stus = new Backbone.Collection(stumodels, {
+    	model: student
+    });
+    for (var i = 0; i < stus.models.length; i++) {
+    	console.log(stus.models[i].toJSON());
+    }
+</script>
+
+
+
+</body>
+</html>

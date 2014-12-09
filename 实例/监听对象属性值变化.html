@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>监听对象属性值变化</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var student =Backbone.Model.extend({
+		initialize: function() {
+			// 初始化时监听属性值变化事件
+			this.on("change:Name", function() {
+				var oldname = this.previous("Name");
+				var newname = this.get("Name");
+				if (oldname != newname) {
+					console.log("Name原值：" + oldname + "，新值：" + newname);
+				}
+			});
+
+		},
+		defaults: {
+			Code: "",
+			Name: "钟大清",
+			Score: ""
+		}
+	});
+	var stuA = new student();
+	stuA.set("Name", "陈小明");
+</script>
+
+
+
+</body>
+</html>

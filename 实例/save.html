@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>save</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var student =Backbone.Model.extend({
+		initialize: function() {
+			
+		},
+		url: "./save.php",
+		defaults: {
+			Code: "10001",
+			Name: "钟大清",
+			Score: 100
+		}
+	});
+	var stuE = new student();
+	stuE.set({
+		Code: "10002",
+		Name: 123123,
+		Score: 200
+	}, { "silent": true});
+	
+	stuE.save(null, {
+		success: function(model, response) {
+			console.log(response.code);
+		}
+	});
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>listenTo</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+<div id="view">
+	<input type="button" value=" 显示 " id="btnShow" />
+	<input type="button" value=" 隐藏 " id="btnHide" /> </div>
+	<div id="Info"> 
+		姓名:陶国荣 <br />
+		性别:男 <br />
+		邮箱:tao_guo_rong@163.com 
+	</div>
+
+	<script type="text/javascript"> 
+		var InfoView = Backbone.View.extend({
+			el: '#view',
+			events: {
+				'click #btnShow': 'ShowInfo',
+				'click #btnHide': 'HideInfo'
+			},
+			ShowInfo: function() {
+				$("#Info").show();
+			},
+			HideInfo: function() {
+				$("#Info").hide();
+			}
+		});
+		var view = new InfoView();
+		
+	</script>
+
+
+
+</body>
+</html>

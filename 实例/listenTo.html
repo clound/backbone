@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>listenTo</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var Person = Backbone.Model.extend({
+		defaults: {
+			name: "",
+			sex: "女",
+			age: "22",
+			score: 120
+		}
+	});
+	var man = new Person();
+	var obj = _.extend({}, Backbone.Events);
+	obj.listenTo(man, "change:age", function(model, value) {
+		var oldage = model.previous("age");
+		var newage = model.get("age");
+		if (oldage != newage) {
+			console.log("age原值："+oldage+", 新值："+newage);
+		}
+	});
+	man.set("age", 37);
+	
+</script>
+
+
+
+</body>
+</html>

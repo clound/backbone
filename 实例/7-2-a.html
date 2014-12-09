@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>html5中history API方法</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    div {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    </style>
+</head>
+<body>
+    
+    <div>记录总量：<span id="divNum"></span></div>
+    <div>刷新前：<span id="divShow"></span></div>
+
+    <script>
+        var obj_a_state = {
+            Code: "10001",
+            Name: "张三",
+            Score: 100
+        }
+
+        window.history.pushState(obj_a_state, "html5中history API方法", "7-2-b.html");
+        document.getElementById("divNum").innerHTML = history.length;
+        document.getElementById("divShow").innerHTML = JSON.stringify(window.history.state);
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

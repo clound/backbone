@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>backbone study</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+	
+	//==============
+	// 初始化数据
+	//==============
+
+    // 定义Book模型类
+	var Book = Backbone.Model.extend({
+	    defaults : {
+	        name : 'unknown',
+	        author : 'unknown',
+	        price : 0
+	    }
+	});
+
+	// 实例化模型对象
+	var javabook = new Book({
+		name:"Think in Java"
+	});
+
+
+	//==============
+	// 读取数据
+	//==============
+
+	// 通过get和escape()方法获取模型中的数据
+	var name = javabook.get("name");
+	var author = javabook.escape("author");
+	var price = javabook.get("price");
+
+	// 在控制台输出模型中的数据name
+	console.log(name); // 输出Thinking in Java
+	console.log(author); // 输出unknown
+	console.log(price); // 输出0
+
+	// 在控制台直接输出对象的attributes属性
+	console.dir(javabook.attributes);
+	// 控制台输出结果
+	// {
+	//     author: 'unknown',
+	//     name: 'Thinking in Java',
+	//     price: 0
+	// }
+
+	//==============
+	// 修改数据
+	//==============
+
+	// 实例化模型对象
+	var javabook = new Book();
+	
+	// 通过set方法设置模型数据
+	javabook.set('name', 'Java7入门经典');
+	javabook.set('author', 'Ivor Horton');
+	javabook.set('price', 88.50);
+
+	// 获取数据并将数据输出到控制台
+	var name = javabook.get('name');
+	var author = javabook.get('author');
+	var price = javabook.get('price');
+	console.log(name); // 输出Java7入门经典
+	console.log(author); // 输出Ivor Horton
+	console.log(price); // 输出88.50
+	
+	//set()方法也允许同时设置多个属性，例如：
+	javabook.set({
+	    name : 'Javascript入门经典',
+	    author : 'Jack Johns',
+	    price : 50
+	});
+	
+</script>
+
+
+
+<script>
+
+	//==============
+	// 当调用set()方法修改模型中的数据时，会触发一系列事件，我们常常通过监听这些事件，来动态调整界面中数据的显示
+	//==============
+
+	// 定义Book模型类
+	var Book = Backbone.Model.extend({
+	    defaults : {
+	        name : 'unknown',
+	        author : 'unknown',
+	        price : 0
+	    }
+	});
+	// 实例化模型对象
+	var javabook = new Book();
+	// 监听模型”change”事件
+	javabook.on('change', function(model) {
+	    console.log('change事件被触发');
+	});
+	// 监听模型”change:name”事件
+	javabook.on('change:name', function(model, value) {
+	    console.log('change:name事件被触发');
+	});
+	// 监听模型”change:author”事件
+	javabook.on('change:author', function(model, value) {
+	    console.log('change:author事件被触发');
+	});
+	// 通过set()方法设置数据
+	javabook.set({
+	    name : 'Thinking in Java',
+	    author : 'unknown',
+	    price : 395.70
+	});
+	// 控制台输出结果:
+	// change:name事件被触发
+	// change事件被触发
+</script>
+
+<script>
+	//============================
+	// Backbone允许我们在修改模型数据时获取上一个状态的数据，这常常用于数据比较和数据回滚。
+	//============================
+
+	// 定义Book模型类
+	var Book = Backbone.Model.extend({
+	    defaults : {
+	        name : 'unknown',
+	        author : 'unknown',
+	        price : 0
+	    }
+	});
+
+	// 实例化模型对象
+	var javabook = new Book();
+
+	// 监听”change:price”事件
+	javabook.on('change:price', function(model, value) {
+	    var price = model.previous('price');
+	    if(price < value) {
+	        console.log('价格上涨了' + (value - price) + '元.');
+	    } else if(price > value) {
+	        console.log('价格下降了' + (value - price) + '元.');
+	    } else {
+	        console.log('价格没有发生变化.');
+	    }
+	});
+
+	// 设置新的价格
+	javabook.set('price', 50);
+
+	// 控制台输出结果:
+	// 价格没有发生变化.
+</script>
+
+<script>
+	//============================
+	// 数据验证
+	//============================
+
+	// 定义Book模型类
+	var Book = Backbone.Model.extend({
+	    validate : function(data) {
+	        if(data.price < 1) {
+	            return '书籍价格不应低于1元.';
+	        }
+	        return false;
+	    }
+	});
+	var javabook = new Book({
+	    price : 50
+	});
+	// 监听error事件，当验证失败时触发
+	javabook.on('error', function(model, error) {
+	    console.log(error);
+	});
+	// 在调用set()方法时，传递了一个配置对象，包含自定义的error处理方法
+	javabook.set('price', 0, {
+	    error : function(model, error) {
+	        console.log('自定义错误：' + error);
+	    }
+	});
+
+	// 如果我们不希望对数据进行验证，可以在调用set()方法时传递一个silent配置，silent配置用于忽略验证规则，并且它不会触发change和error等事件。
+	javabook.set('price', 0, {
+	    silent : true
+	});
+	javabook.set('name', 'Thinking in Java');
+</script>
+
+
+
+</body>
+</html>

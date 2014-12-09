@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>显示多项内容的模板</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+</head>
+<body>
+    <ul id="ulshowstus"></ul>
+    <script type="text/template" id="stus-tpl">
+        <li>编号：<%= Code %></li>
+        <li>姓名：<%= Name %></li>
+        <li>分数：<%= Score %></li>
+    </script>
+    
+    <script>
+        var student = Backbone.Model.extend({
+            defaults: {
+                Code: "",
+                Name: "",
+                Score: 0
+            }
+        });
+
+        var stus = new student({
+            Code: "10107",
+            Name: "李志华",
+            Score: 750
+        });
+
+        var stuview = Backbone.View.extend({
+            el: $("#ulshowstus"),
+            initialize: function() {
+                this.template = _.template($("#stus-tpl").html());
+            },
+            render: function() {
+                this.$el.html(this.template(this.model.toJSON()));
+            }
+        });
+
+        // 实例化一个view视图
+        var stuv = new stuview({ model: stus });
+        stuv.render();
+    </script>
+
+
+</body>
+</html>

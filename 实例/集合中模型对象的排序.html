@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>集合中模型对象的排序</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+
+    var student = Backbone.Model.extend({
+    	defaults: {
+    		Code: "",
+    		Name: "",
+    		Score: 0
+    	},
+    	idAttribute: "Code"
+    });
+
+    var stumodels = [{
+    	Code: "10101",
+    	Name: "周小敏",
+    	Score: 500
+    }, {
+    	Code: "10102",
+    	Name: "陆明明",
+    	Score: 300
+    }, {
+    	Code: "10103",
+    	Name: "陈天豪",
+    	Score: 720
+    }, {
+    	Code: "10104",
+    	Name: "刘真真",
+    	Score: 600
+    }, {
+    	Code: "10105",
+    	Name: "张明基",
+    	Score: 450
+    }, {
+    	Code: "10106",
+    	Name: "舒虎",
+    	Score: 660
+    }, {
+    	Code: "10107",
+    	Name: "占小方",
+    	Score: 380
+    }, {
+    	Code: "10108",
+    	Name: "李煜",
+    	Score: 660
+    }, {
+    	Code: "10109",
+    	Name: "钟舒畅",
+    	Score: 640
+    }, {
+    	Code: "10110",
+    	Name: "佟明月",
+    	Score: 660
+    }];
+
+    var stus = new Backbone.Collection(stumodels, {
+    	model: student,
+    	comparator: function(model_1, model_2) {
+    		var intcomp = model_1.get('Score') > model_2.get('Score');
+    		return intcomp ? 0 : 1;
+    	}
+    });
+    stus.sort();
+
+    // 增加和删除模型前排序输出全部的模型对象
+    for (var i = 0; i < stus.models.length; i++) {
+    	console.log(stus.models[i].toJSON());
+    }
+
+    stus.remove(stumodels[3]);
+    stus.add({
+    	Code: "10111",
+    	Name: "尼玛",
+    	Score: 500
+    });
+    console.log("--------------------排序结果-----------------------");
+
+    // 增加和删除模型后排序输出全部的模型对象
+    for (var i = 0; i < stus.models.length; i++) {
+    	console.log(stus.models[i].toJSON());
+    }
+
+
+    
+</script>
+
+
+
+</body>
+</html>

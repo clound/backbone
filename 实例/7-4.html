@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>location对象的属性和方法</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    
+    <style type="text/css">
+        a {
+            color: #000;
+            text-decoration: none;
+            border: 1px solid #000;
+            padding: 5px;
+            display: inline-block;
+        }
+        #divShow {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div>
+        <a href="">首页</a>
+        <a href="#search">查询列表</a>
+        <a href="#search/abc">关键字查询</a>
+        <a href="#search/abc/p2">页码关键字查询</a>
+        <a href="#error">其他页</a>
+    </div>
+    <div id="divShow"></div>
+    
+
+    <script>
+        var $divShow = $("#divShow");
+        var testrouter = Backbone.Router.extend({
+            routes: {
+                '': 'main',
+                'search': 'search_list',
+                'search/:key': 'search_key',
+                'search/:key/p:page': 'search_key_page',
+                '*search': 'search_default'
+            },
+            main: function() {
+                $divShow.html("首页");
+            },
+            search_list: function() {
+                $divShow.html("查询列表");
+            },
+            search_key: function(key) {
+                $divShow.html("查询关键字为 " + key + " 记录");
+            },
+            search_key_page: function(key, page) {
+                $divShow.html("查询关键字为 " + key + "记录" + " 记录，页码为 " + page);
+            },
+            search_default: function() {
+                $divShow.html("其他页");
+            }
+        });
+        var router = new testrouter();
+        Backbone.history.start();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

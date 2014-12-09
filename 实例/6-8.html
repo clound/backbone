@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>绑定视图模板中的多个事件</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    div {
+        width: 260px;
+        text-align: center;
+        padding: 5px;
+    }
+    .changed {
+        border: 1px solid #000;
+    }
+    </style>
+</head>
+<body>
+    <div id="main"></div>
+    <script type="text/template" id="main-tpl">
+        <div id="backbone"><%= mess %></div>
+        <input type="button" id="btnshow" value="点击一下"/>
+    </script>
+    
+    <script>
+        var stuview = Backbone.View.extend({
+            el: $("#main"),
+            initialize: function() {
+                this.template = _.template($("#main-tpl").html());
+                this.render();
+            },
+            render: function() {
+                this.$el.html(this.template({
+                    mess: "backbone是构建前端MVC的利器"
+                }));
+            },
+            events: {
+                'click div#backbone': 'togcls',
+                'click input#btnshow': 'toggle'
+            },
+            togcls: function() {
+                $("#backbone").toggleClass('changed');
+            },
+            toggle: function() {
+                $("#backbone").toggle();
+            }
+        });
+
+        // 实例化一个view视图
+        var stuv = new stuview();
+    </script>
+
+
+</body>
+</html>

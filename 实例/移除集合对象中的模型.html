@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>移除集合对象中的模型</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+
+    var student = Backbone.Model.extend({
+    	defaults: {
+    		Code: "",
+    		Name: "",
+    		Score: 0
+    	}
+    });
+
+    var stumodels = [{
+    	Code: "10104",
+    	Name: "周小敏",
+    	Score: 500
+    }, {
+    	Code: "10105",
+    	Name: "陆明明",
+    	Score: 300
+    }, {
+    	Code: "10106",
+    	Name: "陈天豪",
+    	Score: 720
+    }, {
+    	Code: "10105",
+    	Name: "刘真真",
+    	Score: 600
+    }, {
+    	Code: "10106",
+    	Name: "张明基",
+    	Score: 450
+    }, {
+    	Code: "10105",
+    	Name: "舒虎",
+    	Score: 660
+    }, {
+    	Code: "10106",
+    	Name: "占小方",
+    	Score: 380
+    }];
+
+    var stus = new Backbone.Collection(stumodels, {
+    	model: student
+    });
+
+    // 删除第一条模型对象
+    stus.shift();
+
+    // 删除第四条模型对象
+    stus.remove(stus.models[3]);
+
+    // 删除最后一条模型对象
+    stus.pop();
+
+    // 重新输出全部的模型对象
+    for (var i = 0; i < stus.models.length; i++) {
+    	console.log(stus.models[i].toJSON());
+    };
+</script>
+
+
+
+</body>
+</html>

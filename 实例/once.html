@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>once</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var Person = Backbone.Model.extend({
+		defaults: {
+			name: "",
+			sex: "女",
+			age: "22",
+			score: 120
+		}
+	});
+	var man = new Person();
+	var intNum = 0;
+	man.once("change", function() {
+		intNum++;
+		console.log("事件触发的次数为"+intNum);
+	});
+	man.set("age","36");
+	man.set("age","37");
+</script>
+
+
+
+</body>
+</html>

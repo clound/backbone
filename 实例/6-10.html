@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>使用Backbone框架开发一个前端We应用</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 270px;
+    }
+    ul li {
+        margin: 5px 0;
+    }
+    ul .lh {
+        font-weight: bold;
+        border-bottom: 1px solid #555;
+        background-color: #eee;
+        height: 23px;
+        line-height: 23px;
+    }
+    ul .lc {
+        border-bottom: 1px dashed #000;
+        height: 23px;
+        line-height: 23px;
+    }
+    ul li span {
+        padding-left: 10px;
+        width: 80px;
+        float: left;
+    }
+    </style>
+</head>
+<body>
+    <ul id="ulshowstus">
+        <li class="lh">
+            <span>编号</span>
+            <span>姓名</span>
+            <span>分数</span>
+        </li>
+    </ul>
+    
+    <ul>
+        <li>编号：<input type="text" id="txtCode"/></li>
+        <li>姓名：<input type="text" id="txtName"/></li>
+        <li>分数：<input type="text" id="txtScore"/></li>
+        <li><input type="button" id="btnSubmit" value="提交"/></li>
+    </ul>
+
+    <script type="text/template" id="stus-tpl">
+        <li class="lc">
+            <span><%= Code %></span>
+            <span><%= Name %></span>
+            <span><%= Score %></span>
+        </li>
+    </script>
+
+    <script>
+        var student = Backbone.Model.extend({
+            defaults: {
+                Code: "10001",
+                Name: "张三",
+                Score: 100
+            }
+        });
+
+        var stulist = Backbone.Collection.extend({
+            initialize: function(model, options) {
+                this.on("add", options.view.showmodel);
+            }
+        });
+
+        var stuview = Backbone.View.extend({
+            el: $("body"),
+            initialize: function() {
+                this.stul = new stulist(null, { view: this });
+            },
+            events: {
+                "click #btnSubmit": "addmodel"
+            },
+            addmodel: function() {
+                var stum = new student({
+                    Code: $("#txtCode").val(),
+                    Name: $("#txtName").val(),
+                    Score: $("#txtScore").val()
+                });
+                this.stul.add(stum);
+            },
+            showmodel: function(model) {
+                this.template = _.template($("#stus-tpl").html());
+                $("#ulshowstus").append(this.template(model.toJSON()));
+            }
+        });
+
+        var stuv = new stuview();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

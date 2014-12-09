@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>视图中简单事件绑定</title>
+    <script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="lib/underscore/underscore.js"></script>
+    <script type="text/javascript" src="lib/backbone/backbone.js"></script>
+    <style type="text/css">
+    body {
+        font-size: 12px;
+    }
+    div {
+        width: 260px;
+        text-align: center;
+        padding: 5px;
+    }
+    .changed {
+        border: 1px solid #000;
+    }
+    </style>
+</head>
+<body>
+    
+    <script>
+        var stuview = Backbone.View.extend({
+            el: $("body"),
+            initialize: function() {
+                this.render();
+            },
+            render: function() {
+                this.$el.append('<div id="backbone">backbone 是构建前端MVC的利器</div>');
+            },
+            events: {
+                'click div#backbone': 'togcls'
+            },
+            togcls: function() {
+                $("#backbone").toggleClass("changed");
+            }
+        });
+
+        var stuv = new stuview();
+    </script>
+
+
+</body>
+</html>

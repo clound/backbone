@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>destroy</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var student =Backbone.Model.extend({
+		initialize: function() {
+			this.on('destroy', function() {
+				console.log('正在调用destroy方法');
+			});
+		},
+		url: "./destroy.php",
+		idAttribute: "Code"
+	});
+	var stuE = new student({
+		Code: "10107"
+	});
+	stuE.destroy({
+		success: function(model, response) {
+			if (response.code == '0') {
+				console.log("Code为" + model.get("Code") + " 的数据已删除");
+			}
+		},
+		error: function(error) {
+			console.log("删除数据出现异常");
+		},
+		wait: true
+	});
+	
+</script>
+
+
+
+</body>
+</html>

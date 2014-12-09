@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>与服务器交互集合中模型对象</title>
+</head>
+<body>
+
+
+<script type="text/javascript" src="lib/jquery/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="lib/underscore/underscore.js"></script>
+<script type="text/javascript" src="lib/backbone/backbone.js"></script>
+
+
+<script>
+
+    var student = Backbone.Model.extend({
+    	defaults: {
+    		Code: "10001",
+    		Name: "张三",
+    		Score: 100
+    	}
+    });
+
+    var stulist = Backbone.Collection.extend({
+        model: student,
+        url: "create.php"
+    	
+    });
+
+    var stus = new stulist();
+    stus.create({
+        Code: "10107",
+        Name: "李志华",
+        Score: 750
+    });
+
+
+    
+</script>
+
+
+
+</body>
+</html>

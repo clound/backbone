@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>once</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+
+</head>
+<body>
+
+
+<script type="text/javascript"> 
+	var Person = Backbone.Model.extend({
+		defaults: {
+			name: "",
+			sex: "女",
+			age: "22",
+			score: 120
+		}
+	});
+	var man = new Person();
+	var m = 0, n = 0;
+	var callback_a = function() {
+		m++;
+		console.log("执行了a事件的次数："+m);
+	}
+	var callback_b = function() {
+		n++;
+		console.log("执行了b事件的次数："+n);
+	}
+	man.on("event_a",callback_a);
+	man.on("event_b",callback_b);
+
+	// 使用 off 方法移除对象的某个或多个绑定事件
+	/*man.off("event_a");
+	man.trigger('event_a event_b');
+	man.off("event_a event_b");
+	man.trigger('event_a event_b');*/
+	//输出结果：
+	//执行了b事件的次数：1
+	
+	// 使用 off 方法移除绑定事件的某个函数
+	/*man.off("event_a", callback_a);
+	man.trigger("event_a event_b");
+	man.off("event_b", callback_b);
+	man.trigger("event_a event_b");*/
+	//输出结果：
+	//执行了b事件的次数：1
+	// 使用 off 方法移除对象的全部绑定事件
+	man.off();
+	man.trigger("event_a event_b");
+	//输出结果：
+	//没有任何信息输出
+	
+</script>
+
+
+
+</body>
+</html>

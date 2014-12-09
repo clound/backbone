@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>_.bindAll()</title>
+
+	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="lib/underscore/underscore.js"></script>
+	<script src="lib/backbone/backbone.js"></script>
+	
+
+</head>
+<body>
+
+<div id="divTip">点击我</div>
+
+<script>
+	var divView = {
+		ele: '#divTip',
+		tip: 'hello, underscore!',
+		onClick: function() {
+			$(this.ele).html(this.tip);
+		}
+	}
+	_.bindAll(divView, 'onClick');
+	$(divView.ele).bind('click', divView.onClick);
+</script>
+
+</body>
+</html>
